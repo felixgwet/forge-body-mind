@@ -1,12 +1,12 @@
 # Forge — Body & Mind Tracker
 
-A mobile-first **Progressive Web App** for tracking strength training, sleep, and mental-performance habits. Installable on iOS/Android home screens, works offline, and stores all data locally on the device — no backend, no accounts, no tracking.
+A mobile-first **Progressive Web App** for tracking strength training, sleep, and mental-performance habits. Installable on iOS/Android home screens, works offline, and stores all data locally on the device. No backend, no accounts, no tracking.
 
 **Live:** https://felixgwet.github.io/forge-body-mind/ (mirror: https://pxjprg6xgwbug.kimi.page)
 
 ## Why I built it
 
-I wanted a single, private, no-friction app for my own training split and daily habits — gym sessions, sleep, meditation, reading, and chess — without signing up for yet another service that owns my data. A PWA was the right call: one codebase, installable like a native app, data stays on-device.
+I wanted a single, private, no-friction app for my own training split and daily habits, gym sessions, sleep, meditation, reading, and chess — without signing up for yet another service that owns my data. A PWA was the right call: one codebase, installable like a native app, data stays on-device.
 
 ## Features
 

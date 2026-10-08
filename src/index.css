@@ -4,26 +4,27 @@
 
 @layer base {
   :root {
-    --background: 222 33% 5%;
-    --foreground: 210 40% 96%;
-    --card: 222 25% 8%;
-    --card-foreground: 210 40% 96%;
-    --popover: 222 25% 8%;
-    --popover-foreground: 210 40% 96%;
-    --primary: 38 92% 55%;
-    --primary-foreground: 222 47% 6%;
-    --secondary: 220 20% 14%;
-    --secondary-foreground: 210 40% 96%;
-    --muted: 220 18% 13%;
-    --muted-foreground: 215 16% 62%;
-    --accent: 220 20% 14%;
-    --accent-foreground: 210 40% 96%;
-    --destructive: 0 72% 55%;
+    /* Bright, energetic light theme */
+    --background: 36 70% 97%;
+    --foreground: 240 25% 12%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 25% 12%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 25% 12%;
+    --primary: 18 95% 55%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 30 55% 94%;
+    --secondary-foreground: 240 25% 12%;
+    --muted: 32 40% 93%;
+    --muted-foreground: 240 8% 42%;
+    --accent: 262 75% 58%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 75% 55%;
     --destructive-foreground: 0 0% 98%;
-    --border: 220 16% 16%;
-    --input: 220 16% 18%;
-    --ring: 38 92% 55%;
-    --radius: 1rem;
+    --border: 30 32% 87%;
+    --input: 30 28% 85%;
+    --ring: 18 95% 55%;
+    --radius: 1.1rem;
   }
 }
 
@@ -57,17 +58,34 @@
   }
 }
 
-/* Sleek touches */
+/* Sleek touches — bright glass cards */
 .glass {
-  background: linear-gradient(160deg, hsl(222 25% 10% / 0.9), hsl(222 30% 7% / 0.95));
-  border: 1px solid hsl(220 16% 16% / 0.9);
+  background: linear-gradient(160deg, hsl(0 0% 100% / 0.96), hsl(35 70% 98% / 0.96));
+  border: 1px solid hsl(30 32% 87% / 0.9);
+  box-shadow: 0 1px 2px hsl(25 60% 30% / 0.05), 0 8px 24px -12px hsl(25 60% 30% / 0.12);
 }
 
 .card-hover {
-  transition: transform 0.15s ease, border-color 0.2s ease;
+  transition: transform 0.15s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 .card-hover:active {
   transform: scale(0.985);
+}
+
+/* Energetic gradient text */
+.gradient-text {
+  background: linear-gradient(100deg, hsl(18 95% 55%), hsl(340 85% 55%) 55%, hsl(262 75% 58%));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Vibrant hero banner */
+.hero-img {
+  width: 100%;
+  height: 9.5rem;
+  object-fit: cover;
+  border-radius: 1.1rem;
 }
 
 @keyframes fadeSlideUp {
@@ -99,13 +117,13 @@
 
 @keyframes ringPulse {
   0% {
-    box-shadow: 0 0 0 0 hsl(38 92% 55% / 0.45);
+    box-shadow: 0 0 0 0 hsl(18 95% 55% / 0.4);
   }
   70% {
-    box-shadow: 0 0 0 14px hsl(38 92% 55% / 0);
+    box-shadow: 0 0 0 14px hsl(18 95% 55% / 0);
   }
   100% {
-    box-shadow: 0 0 0 0 hsl(38 92% 55% / 0);
+    box-shadow: 0 0 0 0 hsl(18 95% 55% / 0);
   }
 }
 .ring-pulse {

@@ -96,8 +96,11 @@ export const SLEEP_BANDS: SleepBand[] = [
       'Two weeks of 6h nights impairs you as much as two nights with zero sleep — and you barely notice it happening (Van Dongen et al., 2003)',
       'Attention lapses, slower reactions, poor memory consolidation',
       'Elevated cortisol and hunger hormones — cravings and fat gain risk',
+      'Testosterone and growth hormone release drop sharply — directly blunting gym gains',
       'Linked to higher risk of obesity, diabetes, heart disease and depression (AASM/NSF consensus)',
       'Weakened immune system — you get sick more often',
+      'Emotional regulation suffers — small stressors feel like big ones',
+      'Reaction time suffers as much as alcohol impairment in extreme cases',
     ],
   },
   {
@@ -105,12 +108,14 @@ export const SLEEP_BANDS: SleepBand[] = [
     label: '6 – 7h',
     tone: 'warn',
     headline: 'Below the recommended floor',
-    pros: ['You can function — workouts are still possible'],
+    pros: ['You can function — workouts are still possible', 'Slightly better than under 6h, and naps can patch some of the debt'],
     cons: [
       'Below the 7h minimum recommended for adults (AASM / CDC / Sleep Foundation)',
       'Chronic short sleepers consistently underestimate how impaired they are',
       'Recovery between gym sessions is slower — muscle repair happens mostly during sleep',
       'Mood and stress resilience take a quiet hit',
+      'Appetite hormones drift — you feel hungrier and less satisfied after meals',
+      'Deep sleep (the physically restorative kind) is usually the first thing cut',
     ],
   },
   {
@@ -124,6 +129,9 @@ export const SLEEP_BANDS: SleepBand[] = [
       'Lowest all-cause mortality in large cohort studies — the risk curve bottoms out around 7h',
       'Muscle recovery, growth hormone release and immune function all peak',
       'Better mood, stress resilience and appetite control',
+      'Skin, hair and eyes look noticeably better — sleep is the cheapest recovery tool you own',
+      'Learning sticks: skills practiced during the day are consolidated overnight',
+      'Willpower is restored — good sleep makes every other habit easier',
     ],
     cons: ['None — this is the target range. Keep it consistent, even on weekends'],
   },
@@ -132,11 +140,12 @@ export const SLEEP_BANDS: SleepBand[] = [
     label: 'Over 9h',
     tone: 'info',
     headline: 'Possibly oversleeping',
-    pros: ['Fine occasionally — illness, heavy training blocks and catching up on debt are valid reasons'],
+    pros: ['Fine occasionally — illness, heavy training blocks and catching up on debt are valid reasons', 'Athletes in hard training phases sometimes genuinely need 9–10h'],
     cons: [
       'Regularly sleeping 9h+ is associated in studies with higher health risks (U-shaped curve)',
       'Can leave you groggier than 7–8h if it disrupts your rhythm',
       'If this keeps happening, it may signal poor sleep quality or an underlying issue',
+      'Late wake times shift your body clock — making the next night harder to hit',
     ],
   },
 ];
@@ -147,6 +156,8 @@ export const SLEEP_TIPS = [
   'No heavy meals or intense screens in the last hour.',
   'Morning light exposure anchors your body clock.',
   'Caffeine after early afternoon steals deep sleep hours later.',
+  'Train hard, but finish intense workouts 2–3h before bed.',
+  'A short evening walk plus light stretching lowers cortisol before bed.',
 ];
 
 // ─── Semen retention (anecdotal — clearly labelled) ───
@@ -154,7 +165,7 @@ export const RETENTION_MILESTONES = [
   {
     day: 1,
     title: 'The starting line',
-    text: 'Day one is a decision, not a streak. Every long streak you admire started here.',
+    text: 'Day one is a decision, not a number. Every long run you admire started here.',
   },
   {
     day: 3,
@@ -199,9 +210,19 @@ export const MEDITATION_BENEFITS = [
     text: 'Even a single session measurably reduces anxiety. Just 15 minutes can shift you to the relaxation level of a vacation day (2020 study, J. of Positive Psychology).',
   },
   {
+    minDays: 3,
+    title: 'First few days',
+    text: 'You begin noticing the urge-to-reaction gap: a pause appears between what happens and how you respond. Sleep onset often improves within the first week of practice.',
+  },
+  {
     minDays: 7,
     title: 'After ~1 week',
     text: 'Brief training (as little as 4 days) improves sustained attention, working memory and visuo-spatial processing, while cutting anxiety and mental fatigue.',
+  },
+  {
+    minDays: 14,
+    title: 'After ~2 weeks',
+    text: 'Emotional baseline steadies — fewer spikes of irritation, faster recovery from frustration. Many practitioners report needing less caffeine to feel alert.',
   },
   {
     minDays: 30,
@@ -209,10 +230,22 @@ export const MEDITATION_BENEFITS = [
     text: 'An 8-week mindfulness program reduced anxiety by ~30% — comparable to conventional treatment, per a JAMA Psychiatry study; another found mindfulness nearly as effective as the antidepressant escitalopram for anxiety disorders.',
   },
   {
+    minDays: 60,
+    title: 'After ~2 months',
+    text: 'Habitual reactivity keeps dropping. Practitioners commonly report better impulse control around food, screens and temper — the same self-regulation muscle that powers gym consistency.',
+  },
+  {
     minDays: 90,
     title: 'Long term',
     text: 'Long-term meditators show increased cortical folding (faster information processing) and better-preserved grey matter with age (UCLA, 2012). Consistent practice also lowers inflammation and raises stress resilience.',
   },
+];
+
+export const MEDITATION_SKIPPING = [
+  '1–2 days off: nothing is lost — the calm baseline simply stops rising.',
+  '3–4 days off: stress reactivity creeps back; you may feel busier and more scattered without knowing why.',
+  'A week off: attention gains plateau, sleep onset can slip again, and the practice starts feeling "hard to restart" — the real cost is the restart friction.',
+  'The fix is always small: sit for 5 minutes. Momentum returns fast.',
 ];
 
 export const MEDITATION_KINDS = ['Breath awareness', 'Guided', 'Mindfulness / body scan', 'Moving / walking', 'Other'];
@@ -225,6 +258,8 @@ export const READING_CATEGORIES: Record<string, { label: string; benefits: strin
       'Narrative fiction builds empathy and theory of mind — understanding other people\'s inner worlds',
       'Vocabulary and language instincts grow passively',
       'Sustained attention span trains like a muscle',
+      'Mental simulation of scenes and characters keeps imagination vivid — a creativity booster',
+      'A chapter before bed replaces doomscrolling and protects your wind-down',
     ],
   },
   nonfiction: {
@@ -233,6 +268,8 @@ export const READING_CATEGORIES: Record<string, { label: string; benefits: strin
       'Direct knowledge compounding — every session makes you more capable than yesterday',
       'Better conversations, decisions and frameworks for thinking',
       'Reading for as little as ~6 minutes has been shown to reduce stress',
+      'You start connecting ideas across fields — the source of original thinking',
+      'A daily reading habit is the highest-ROI habit most successful people share',
     ],
   },
   selfdev: {
@@ -241,6 +278,8 @@ export const READING_CATEGORIES: Record<string, { label: string; benefits: strin
       'Mindset reinforcement — you absorb the identity you are trying to build',
       'Practical strategies surface right when you need them',
       'Pairs powerfully with meditation and discipline work',
+      'Re-reading great books at different life stages yields brand-new lessons',
+      'Progress feels measurable — one idea applied beats ten ideas skimmed',
     ],
   },
   biography: {
@@ -249,6 +288,8 @@ export const READING_CATEGORIES: Record<string, { label: string; benefits: strin
       'Pattern-matching from real lives — you inherit decades of others\' experience in hours',
       'Perspective and motivation: your struggles have been survived before',
       'Sharper judgment about people, power and decisions',
+      'History repeats — readers of history recognize the patterns early',
+      'Great biographies double as masterclasses in ambition, failure and resilience',
     ],
   },
   other: {
@@ -256,9 +297,17 @@ export const READING_CATEGORIES: Record<string, { label: string; benefits: strin
     benefits: [
       'Any sustained reading trains focus and deepens knowledge',
       'Screen-free time before bed also protects your sleep',
+      'Curiosity-driven reading is the kind that sticks longest',
     ],
   },
 };
+
+export const READING_SKIPPING = [
+  '2–3 days off: nothing decays yet, but the "when do I read?" slot starts filling with your phone.',
+  'A week off: the book feels heavier to pick up — restart friction, not lost ability, is the enemy.',
+  'Weeks off: the identity quietly shifts from "I read daily" to "I should read more" — protect the identity, not the page count.',
+  'Ten pages is always enough to keep the door open.',
+];
 
 // ─── Chess ───
 export const CHESS_BENEFITS = [
@@ -268,9 +317,19 @@ export const CHESS_BENEFITS = [
     text: 'A game of chess engages both hemispheres — logic and analytics on the left, creativity and pattern holistics on the right. One game is a full workout for planning, working memory and concentration.',
   },
   {
+    minDays: 3,
+    title: 'A few sessions in',
+    text: 'You start seeing hanging pieces and one-move threats instantly, and calculating "checks, captures, threats" before touching a piece — a discipline that transfers to any high-stakes decision.',
+  },
+  {
     minDays: 7,
     title: 'Consistent week',
     text: 'In one study, 30 minutes of chess a day for 6 months improved children\'s attention span by ~50% — and the gains transferred to schoolwork. Sustained focus is the first thing regular play trains.',
+  },
+  {
+    minDays: 14,
+    title: 'Two weeks of play',
+    text: 'Tactical pattern libraries fill in: pins, forks, skewers and discovered attacks start appearing on the board before you consciously look for them. Blunder-checking becomes automatic.',
   },
   {
     minDays: 30,
@@ -296,7 +355,7 @@ export const HABIT_GAP_WARNINGS: Record<string, { days: number; text: string }[]
     { days: 4, text: '4 days off: attention gains begin to decay. Sit for 10 minutes — future you will feel it.' },
   ],
   reading: [
-    { days: 2, text: '2 days without reading: the habit is colder than you think. Ten pages keeps the chain alive.' },
+    { days: 2, text: '2 days without reading: the habit is colder than you think. Ten pages keeps it warm.' },
     { days: 4, text: '4 days off: momentum is fading. Read before bed tonight — your sleep will thank you too.' },
   ],
 };
@@ -326,13 +385,13 @@ export const CONGRATS_MESSAGES: Record<string, string> = {
   'gym-3week': '3+ workouts this week — your consistency is compounding. Muscle is being built one session at a time.',
   'gym-4week': '4+ workouts this week — elite consistency. This is how physiques are made.',
   'sleep-week-good': 'A full week averaging 7–9h of sleep — recovery, hormones and focus are all operating at their peak.',
-  'meditate-7': '7 days of meditation — anxiety down, attention up. You are literally reshaping your brain.',
-  'meditate-30': '30 days of meditation — this is now a practice, not a phase. JAMA-level results territory.',
-  'read-7': '7 days of reading — knowledge is compounding. Readers finish the year as different people.',
-  'read-30': '30 days of reading — a genuine identity-level habit. Keep feeding your mind.',
-  'chess-7': '7 days of chess — your pattern recognition and calculation are sharpening daily.',
-  'chess-30': '30 days of chess — working-memory training in disguise. The board is your second gym.',
+  'meditate-7': '7 meditation sessions logged — anxiety down, attention up. You are literally reshaping your brain.',
+  'meditate-30': '30 meditation sessions — this is now a practice, not a phase. JAMA-level results territory.',
+  'read-7': '7 reading sessions logged — knowledge is compounding. Readers finish the year as different people.',
+  'read-30': '30 reading sessions — a genuine identity-level habit. Keep feeding your mind.',
+  'chess-7': '7 chess sessions logged — your pattern recognition and calculation are sharpening with every game.',
+  'chess-30': '30 chess sessions — working-memory training in disguise. The board is your second gym.',
   'retention-7': '7 days of retention — the week-one surge. Channel the energy into your training.',
   'retention-30': '30 days of retention — a full month of self-mastery. Confidence and discipline are compounding.',
-  'retention-90': '90 days — the full "reboot". What you have built is identity, not just a streak. Legendary discipline.',
+  'retention-90': '90 days — the full "reboot". What you have built is identity, not just a counter. Legendary discipline.',
 };

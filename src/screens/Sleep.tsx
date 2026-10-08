@@ -37,6 +37,16 @@ export default function Sleep() {
 
   return (
     <div className="px-4 pt-2 pb-28 space-y-1">
+      {/* Hero banner */}
+      <div className="relative mt-3 rounded-[1.1rem] overflow-hidden shadow-lg shadow-sky-500/10">
+        <img src="./hero-sleep.jpg" alt="" className="w-full h-32 object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 p-4">
+          <h1 className="text-xl font-bold tracking-tight text-white">Sleep — the real anabolic</h1>
+          <p className="text-[11px] text-white/75">7–9 hours: where muscle, memory and mood are made</p>
+        </div>
+      </div>
+
       <Card className="mt-3">
         <p className="text-xs font-semibold text-foreground/90 mb-3">Log last night's sleep</p>
         <div className="space-y-3">
@@ -54,10 +64,10 @@ export default function Sleep() {
               step={0.5}
               value={Number(hours) || 0}
               onChange={(e) => setHours(e.target.value)}
-              className="w-full mt-3 accent-[hsl(38_92%_55%)]"
+              className="w-full mt-3 accent-[hsl(18_95%_55%)]"
             />
             <div className="flex justify-between text-[10px] text-muted-foreground mt-1">
-              <span>3h</span><span className="text-emerald-400 font-medium">7–9h optimal</span><span>12h</span>
+              <span>3h</span><span className="text-emerald-600 font-semibold">7–9h optimal</span><span>12h</span>
             </div>
           </div>
           <div>
@@ -94,12 +104,12 @@ export default function Sleep() {
       {lastNight && lastBand && (
         <Card className="mt-3">
           <div className="flex items-center gap-2 mb-2">
-            <MoonStar size={16} className={lastBand.tone === 'good' ? 'text-emerald-400' : lastBand.tone === 'bad' ? 'text-red-400' : 'text-amber-400'} />
+            <MoonStar size={16} className={lastBand.tone === 'good' ? 'text-emerald-600' : lastBand.tone === 'bad' ? 'text-red-500' : 'text-amber-600'} />
             <p className="text-sm font-semibold">Last log: {lastNight.hours}h — {lastBand.headline}</p>
           </div>
           <div className="space-y-1.5">
             {lastBand.pros.map((p, i) => (
-              <p key={`p${i}`} className="text-xs text-emerald-400/90 flex gap-2"><span>+</span><span>{p}</span></p>
+              <p key={`p${i}`} className="text-xs text-emerald-700 flex gap-2"><span>+</span><span>{p}</span></p>
             ))}
             {lastBand.cons.map((c, i) => (
               <p key={`c${i}`} className="text-xs text-muted-foreground flex gap-2"><span>–</span><span>{c}</span></p>
@@ -112,25 +122,25 @@ export default function Sleep() {
       <SectionTitle title="Your sleep" />
       <div className="grid grid-cols-2 gap-3">
         <Card><Stat label="Average" value={avg ? avg.toFixed(1) : '—'} unit="h" accent="text-primary" /><p className="text-[11px] text-muted-foreground mt-1">across {logs.length} night{logs.length === 1 ? '' : 's'}</p></Card>
-        <Card><Stat label="In optimal zone" value={logs.length ? Math.round((inZone / logs.length) * 100) : 0} unit="%" accent="text-emerald-400" /><p className="text-[11px] text-muted-foreground mt-1">of nights at 7–9h</p></Card>
+        <Card><Stat label="In optimal zone" value={logs.length ? Math.round((inZone / logs.length) * 100) : 0} unit="%" accent="text-emerald-600" /><p className="text-[11px] text-muted-foreground mt-1">of nights at 7–9h</p></Card>
       </div>
 
       <Card className="mt-3">
         <p className="text-xs font-semibold mb-3 text-foreground/90">Hours — last 14 days</p>
-        {logs.length ? <MiniBars data={bars} color="hsl(210 90% 60%)" /> : <EmptyState icon={<BedDouble size={28} />} text="Log your first night above." />}
+        {logs.length ? <MiniBars data={bars} color="hsl(205 85% 48%)" /> : <EmptyState icon={<BedDouble size={28} />} text="Log your first night above." />}
       </Card>
 
       {/* Reference bands */}
       <SectionTitle title="What the research says" sub="Adult recommendation: 7–9 hours (AASM / CDC / Sleep Foundation)" />
       <div className="space-y-3">
         {SLEEP_BANDS.map((b) => (
-          <Card key={b.label} className={b.tone === 'good' ? 'border-emerald-500/30' : ''}>
+          <Card key={b.label} className={b.tone === 'good' ? 'border-emerald-500/40' : ''}>
             <div className="flex items-center justify-between mb-1.5">
               <p className="text-sm font-semibold">{b.label}</p>
               <Pill tone={b.tone === 'good' ? 'good' : b.tone === 'bad' ? 'bad' : b.tone === 'warn' ? 'warn' : 'info'}>{b.headline}</Pill>
             </div>
             <div className="space-y-1">
-              {b.pros.map((p, i) => <p key={`p${i}`} className="text-[11px] text-emerald-400/90 flex gap-2"><span>+</span><span>{p}</span></p>)}
+              {b.pros.map((p, i) => <p key={`p${i}`} className="text-[11px] text-emerald-700 flex gap-2"><span>+</span><span>{p}</span></p>)}
               {b.cons.map((c, i) => <p key={`c${i}`} className="text-[11px] text-muted-foreground flex gap-2"><span>–</span><span>{c}</span></p>)}
             </div>
           </Card>
@@ -160,7 +170,7 @@ export default function Sleep() {
                 <Pill tone={bandFor(l.hours).tone === 'good' ? 'good' : bandFor(l.hours).tone === 'bad' ? 'bad' : bandFor(l.hours).tone === 'warn' ? 'warn' : 'info'}>
                   {bandFor(l.hours).label}
                 </Pill>
-                <button onClick={() => dispatch({ type: 'deleteSleep', id: l.id })} className="p-2 text-muted-foreground/50 hover:text-red-400" aria-label="Delete">
+                <button onClick={() => dispatch({ type: 'deleteSleep', id: l.id })} className="p-2 text-muted-foreground/50 hover:text-red-500" aria-label="Delete">
                   <Trash2 size={15} />
                 </button>
               </div>

@@ -112,20 +112,6 @@ export function daysBetween(aISO: string, bISO: string): number {
   return Math.round((Date.UTC(by, bm - 1, bd) - Date.UTC(ay, am - 1, ad)) / 86400000);
 }
 
-/** Consecutive-day streak ending today or yesterday (so today isn't penalised yet). */
-export function streakFromDates(datesISO: string[]): number {
-  const set = new Set(datesISO);
-  const today = todayISO();
-  let cursor = set.has(today) ? today : dateISO(new Date(Date.now() - 86400000));
-  if (!set.has(cursor)) return 0;
-  let streak = 0;
-  while (set.has(cursor)) {
-    streak++;
-    cursor = dateISO(new Date(new Date(cursor + 'T12:00:00').getTime() - 86400000));
-  }
-  return streak;
-}
-
 /** Days since the most recent date in the list (0 if today). */
 export function daysSinceLatest(datesISO: string[]): number | null {
   if (!datesISO.length) return null;
@@ -159,7 +145,7 @@ export function useStore(): StoreCtx {
 }
 
 // ─── Derived stats helpers ───
-export function retentionStreakDays(releases: ReleaseLog[]): number {
+export function retentionDays(releases: ReleaseLog[]): number {
   if (!releases.length) return 0;
   const latest = releases.map((r) => r.dateISO.slice(0, 10)).reduce((a, b) => (a > b ? a : b));
   return daysBetween(latest, todayISO());

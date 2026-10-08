@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Flame, Info, CheckCircle2 } from 'lucide-react';
-import { useStore, todayISO, retentionStreakDays } from '../lib/store';
+import { Sparkles, Info, CheckCircle2 } from 'lucide-react';
+import { useStore, todayISO, retentionDays } from '../lib/store';
 import { RETENTION_MILESTONES, RETENTION_DISCLAIMER } from '../lib/data';
 import { Card, SectionTitle, PrimaryButton, GhostButton, Input, Label, Pill } from '../components/bits';
 import { notify } from '../lib/store';
@@ -11,9 +11,9 @@ export default function Retention() {
   const [releaseDate, setReleaseDate] = useState(todayISO());
   const [releaseTime, setReleaseTime] = useState('22:00');
 
-  const days = retentionStreakDays(state.releases);
+  const days = retentionDays(state.releases);
   const best = (() => {
-    // compute best past streak between releases
+    // compute longest past stretch between releases
     const dates = [...state.releases.map((r) => r.dateISO.slice(0, 10))].sort();
     let best = 0;
     for (let i = 1; i < dates.length; i++) {
@@ -31,9 +31,9 @@ export default function Retention() {
       {/* Hero */}
       <Card className="mt-3 flex flex-col items-center py-6">
         <div className="relative mb-2">
-          <Flame size={44} className={days > 0 ? 'text-primary' : 'text-muted-foreground/40'} fill={days > 0 ? 'hsl(38 92% 55% / 0.25)' : 'none'} />
+          <Sparkles size={44} className={days > 0 ? 'text-accent' : 'text-muted-foreground/40'} fill={days > 0 ? 'hsl(262 75% 58% / 0.2)' : 'none'} />
         </div>
-        <p className="text-6xl font-bold tabular-nums tracking-tight">{days}</p>
+        <p className="text-6xl font-bold tabular-nums tracking-tight gradient-text">{days}</p>
         <p className="text-xs uppercase tracking-widest text-muted-foreground mt-1">day{days === 1 ? '' : 's'} retained</p>
         {best > 0 && <p className="text-[11px] text-muted-foreground mt-2">Personal best: {best} days</p>}
         <div className="flex gap-2 w-full mt-5">
@@ -56,7 +56,7 @@ export default function Retention() {
             onClick={() => {
               dispatch({ type: 'logRelease', release: { dateISO: `${releaseDate}T${releaseTime}:00` } });
               setShowLog(false);
-              notify('Counter reset', 'Day 1. Every streak you admire started here.');
+              notify('Counter reset', 'Day 1. Every long run you admire started here.');
             }}
           >
             Confirm — start day 1

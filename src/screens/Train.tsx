@@ -90,6 +90,16 @@ export default function Train() {
 
   return (
     <div className="px-4 pt-2 pb-28 space-y-1">
+      {/* Hero banner */}
+      <div className="relative mt-3 rounded-[1.1rem] overflow-hidden shadow-lg shadow-orange-500/10">
+        <img src="./hero-train.jpg" alt="" className="w-full h-32 object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 p-4">
+          <h1 className="text-xl font-bold tracking-tight text-white">{todayPlan.rest ? 'Rest day' : `${todayPlan.day} session`}</h1>
+          <p className="text-[11px] text-white/75">{todayPlan.rest ? 'Recover & recharge — the gym will wait' : `${todayPlan.exercises.length} exercises · track your time, earn your burn`}</p>
+        </div>
+      </div>
+
       {/* Timer card */}
       <Card className="mt-3">
         {!timerStart ? (
@@ -174,8 +184,8 @@ export default function Train() {
       <div className="grid grid-cols-2 gap-3">
         <Card><Stat label="Sessions (14d)" value={sessions.filter((s) => s.dateISO >= dateISO(new Date(Date.now() - 13 * 86400000))).length} accent="text-primary" /><p className="text-[11px] text-muted-foreground mt-1">last 14 days</p></Card>
         <Card><Stat label="Avg duration" value={avgMin} unit="min" /><p className="text-[11px] text-muted-foreground mt-1">per session</p></Card>
-        <Card><Stat label="Avg burn" value={avgKcal} unit="kcal" accent="text-orange-400" /><p className="text-[11px] text-muted-foreground mt-1">approx, per session</p></Card>
-        <Card><Stat label="Total burn" value={totalKcal} unit="kcal" /><p className="text-[11px] text-muted-foreground mt-1">all time</p></Card>
+        <Card><Stat label="Avg burn" value={avgKcal} unit="kcal" accent="text-orange-600" /><p className="text-[11px] text-muted-foreground mt-1">approx, per session</p></Card>
+        <Card><Stat label="Total burn" value={totalKcal} unit="kcal" accent="text-emerald-600" /><p className="text-[11px] text-muted-foreground mt-1">all time</p></Card>
       </div>
 
       <Card className="mt-3">
@@ -273,7 +283,7 @@ export default function Train() {
                 </div>
                 <button
                   onClick={() => dispatch({ type: 'deleteGym', id: s.id })}
-                  className="p-2 text-muted-foreground/50 hover:text-red-400"
+                  className="p-2 text-muted-foreground/50 hover:text-red-500"
                   aria-label="Delete session"
                 >
                   <Trash2 size={15} />

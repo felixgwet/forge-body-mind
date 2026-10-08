@@ -1,10 +1,12 @@
 import React, { useMemo, useState } from 'react';
 import { Brain, BookOpen, Crown, Trash2 } from 'lucide-react';
-import { useStore, todayISO, streakFromDates, daysSinceLatest, notify } from '../lib/store';
+import { useStore, todayISO, dateISO, daysSinceLatest, notify } from '../lib/store';
 import {
   MEDITATION_BENEFITS,
+  MEDITATION_SKIPPING,
   MEDITATION_KINDS,
   READING_CATEGORIES,
+  READING_SKIPPING,
   CHESS_BENEFITS,
   CHESS_GAP_WARNINGS,
   HABIT_GAP_WARNINGS,
@@ -13,11 +15,23 @@ import { Card, SectionTitle, Stat, Pill, PrimaryButton, Input, Select, Label, Em
 
 type Tab = 'meditate' | 'read' | 'chess';
 
+const weekStart = () => dateISO(new Date(Date.now() - 6 * 86400000));
+
 export default function Mind() {
   const [tab, setTab] = useState<Tab>('meditate');
 
   return (
     <div className="px-4 pt-2 pb-28 space-y-1">
+      {/* Hero banner */}
+      <div className="relative mt-3 rounded-[1.1rem] overflow-hidden shadow-lg shadow-violet-500/10">
+        <img src="./hero-mind.jpg" alt="" className="w-full h-32 object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 p-4">
+          <h1 className="text-xl font-bold tracking-tight text-white">Mind gym</h1>
+          <p className="text-[11px] text-white/75">Meditate · Read · Chess — train the brain like a muscle</p>
+        </div>
+      </div>
+
       <div className="flex gap-2 mt-3">
         {(
           [
@@ -30,7 +44,7 @@ export default function Mind() {
             key={t.id}
             onClick={() => setTab(t.id)}
             className={`flex-1 flex items-center justify-center gap-1.5 rounded-xl py-2.5 text-sm font-semibold border transition-colors ${
-              tab === t.id ? 'bg-primary text-primary-foreground border-primary' : 'bg-secondary border-border text-muted-foreground'
+              tab === t.id ? 'bg-primary text-primary-foreground border-primary shadow-md shadow-orange-500/25' : 'bg-secondary border-border text-muted-foreground'
             }`}
           >
             {t.icon}
@@ -53,9 +67,9 @@ function Meditate() {
   const [kind, setKind] = useState(MEDITATION_KINDS[0]);
 
   const dates = state.meditationLogs.map((l) => l.dateISO);
-  const streak = streakFromDates(dates);
   const totalMin = state.meditationLogs.reduce((a, l) => a + l.minutes, 0);
   const totalSessions = state.meditationLogs.length;
+  const weekCount = state.meditationLogs.filter((l) => l.dateISO >= weekStart()).length;
   const gap = daysSinceLatest(dates);
   const todayLogged = dates.includes(todayISO());
   const warning = gap !== null && !todayLogged ? HABIT_GAP_WARNINGS.meditation.filter((w) => gap >= w.days).pop() : null;
@@ -64,7 +78,7 @@ function Meditate() {
     <div className="space-y-1">
       {warning && (
         <Card className="mt-3 border-amber-500/30">
-          <p className="text-xs text-amber-400 font-medium">⚠ {warning.text}</p>
+          <p className="text-xs text-amber-700 font-medium">⚠ {warning.text}</p>
         </Card>
       )}
 
@@ -105,7 +119,7 @@ function Meditate() {
       </Card>
 
       <div className="grid grid-cols-3 gap-3 mt-3">
-        <Card><Stat label="Streak" value={streak} unit="days" accent="text-primary" /></Card>
+        <Card><Stat label="This week" value={weekCount} unit="sessions" accent="text-accent" /></Card>
         <Card><Stat label="Sessions" value={totalSessions} /></Card>
         <Card><Stat label="Minutes" value={totalMin} /></Card>
       </div>
@@ -113,9 +127,9 @@ function Meditate() {
       <SectionTitle title="Benefits you're building" sub="Based on published mindfulness research" />
       <div className="space-y-3">
         {MEDITATION_BENEFITS.map((b) => {
-          const active = totalSessions >= 1 && (b.minDays === 1 || streak >= b.minDays || totalSessions >= b.minDays);
+          const active = totalSessions >= b.minDays;
           return (
-            <Card key={b.minDays} className={active ? 'border-primary/30' : ''}>
+            <Card key={b.minDays} className={active ? 'border-accent/40' : ''}>
               <div className="flex items-center justify-between mb-1">
                 <p className={`text-sm font-semibold ${active ? '' : 'text-muted-foreground'}`}>{b.title}</p>
                 {active && <Pill tone="accent">building</Pill>}
@@ -125,6 +139,15 @@ function Meditate() {
           );
         })}
       </div>
+
+      <Card className="mt-3">
+        <p className="text-xs font-semibold mb-1.5 text-foreground/90">The cost of skipping</p>
+        <div className="space-y-1.5">
+          {MEDITATION_SKIPPING.map((s, i) => (
+            <p key={i} className="text-[11px] text-muted-foreground flex gap-2"><span className="text-red-500">–</span>{s}</p>
+          ))}
+        </div>
+      </Card>
 
       <LogList
         logs={state.meditationLogs}
@@ -144,8 +167,8 @@ function Read() {
   const [category, setCategory] = useState('nonfiction');
 
   const dates = state.readingLogs.map((l) => l.dateISO);
-  const streak = streakFromDates(dates);
   const totalMin = state.readingLogs.reduce((a, l) => a + l.minutes, 0);
+  const weekCount = state.readingLogs.filter((l) => l.dateISO >= weekStart()).length;
   const gap = daysSinceLatest(dates);
   const todayLogged = dates.includes(todayISO());
   const warning = gap !== null && !todayLogged ? HABIT_GAP_WARNINGS.reading.filter((w) => gap >= w.days).pop() : null;
@@ -155,7 +178,7 @@ function Read() {
     <div className="space-y-1">
       {warning && (
         <Card className="mt-3 border-amber-500/30">
-          <p className="text-xs text-amber-400 font-medium">⚠ {warning.text}</p>
+          <p className="text-xs text-amber-700 font-medium">⚠ {warning.text}</p>
         </Card>
       )}
 
@@ -202,10 +225,19 @@ function Read() {
       </Card>
 
       <div className="grid grid-cols-3 gap-3 mt-3">
-        <Card><Stat label="Streak" value={streak} unit="days" accent="text-primary" /></Card>
+        <Card><Stat label="This week" value={weekCount} unit="sessions" accent="text-accent" /></Card>
         <Card><Stat label="Sessions" value={state.readingLogs.length} /></Card>
         <Card><Stat label="Minutes" value={totalMin} /></Card>
       </div>
+
+      <Card className="mt-3">
+        <p className="text-xs font-semibold mb-1.5 text-foreground/90">The cost of skipping</p>
+        <div className="space-y-1.5">
+          {READING_SKIPPING.map((s, i) => (
+            <p key={i} className="text-[11px] text-muted-foreground flex gap-2"><span className="text-red-500">–</span>{s}</p>
+          ))}
+        </div>
+      </Card>
 
       <LogList
         logs={state.readingLogs}
@@ -225,8 +257,8 @@ function Chess() {
   const [games, setGames] = useState('1');
 
   const dates = state.chessLogs.map((l) => l.dateISO);
-  const streak = streakFromDates(dates);
   const totalMin = state.chessLogs.reduce((a, l) => a + l.minutes, 0);
+  const weekCount = state.chessLogs.filter((l) => l.dateISO >= weekStart()).length;
   const gap = daysSinceLatest(dates);
   const todayLogged = dates.includes(todayISO());
   const warning = gap !== null && !todayLogged ? CHESS_GAP_WARNINGS.filter((w) => gap >= w.days).pop() : null;
@@ -235,7 +267,7 @@ function Chess() {
     <div className="space-y-1">
       {warning && (
         <Card className="mt-3 border-red-500/30">
-          <p className="text-xs text-red-400 font-medium">⚠ {warning.text}</p>
+          <p className="text-xs text-red-600 font-medium">⚠ {warning.text}</p>
         </Card>
       )}
 
@@ -274,7 +306,7 @@ function Chess() {
       </Card>
 
       <div className="grid grid-cols-3 gap-3 mt-3">
-        <Card><Stat label="Streak" value={streak} unit="days" accent="text-primary" /></Card>
+        <Card><Stat label="This week" value={weekCount} unit="sessions" accent="text-accent" /></Card>
         <Card><Stat label="Sessions" value={state.chessLogs.length} /></Card>
         <Card><Stat label="Minutes" value={totalMin} /></Card>
       </div>
@@ -282,9 +314,9 @@ function Chess() {
       <SectionTitle title="Benefits you're building" sub="From chess cognition research" />
       <div className="space-y-3">
         {CHESS_BENEFITS.map((b) => {
-          const active = state.chessLogs.length >= 1 && (b.minDays === 1 || streak >= b.minDays || state.chessLogs.length >= b.minDays);
+          const active = state.chessLogs.length >= b.minDays;
           return (
-            <Card key={b.minDays} className={active ? 'border-primary/30' : ''}>
+            <Card key={b.minDays} className={active ? 'border-accent/40' : ''}>
               <div className="flex items-center justify-between mb-1">
                 <p className={`text-sm font-semibold ${active ? '' : 'text-muted-foreground'}`}>{b.title}</p>
                 {active && <Pill tone="accent">building</Pill>}
@@ -299,7 +331,7 @@ function Chess() {
         <p className="text-xs font-semibold mb-1.5 text-foreground/90">The cost of skipping</p>
         <div className="space-y-1.5">
           {CHESS_GAP_WARNINGS.map((w) => (
-            <p key={w.days} className="text-[11px] text-muted-foreground flex gap-2"><span className="text-red-400">–</span>{w.text}</p>
+            <p key={w.days} className="text-[11px] text-muted-foreground flex gap-2"><span className="text-red-500">–</span>{w.text}</p>
           ))}
         </div>
       </Card>
@@ -338,7 +370,7 @@ function LogList<T extends { id: string; dateISO: string }>({
               <p className="text-sm font-medium">{new Date(l.dateISO + 'T12:00:00').toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })}</p>
               <p className="text-[11px] text-muted-foreground truncate">{render(l)}</p>
             </div>
-            <button onClick={() => onDelete(l.id)} className="p-2 text-muted-foreground/50 hover:text-red-400" aria-label="Delete">
+            <button onClick={() => onDelete(l.id)} className="p-2 text-muted-foreground/50 hover:text-red-500" aria-label="Delete">
               <Trash2 size={15} />
             </button>
           </div>

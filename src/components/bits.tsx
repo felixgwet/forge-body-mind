@@ -36,11 +36,11 @@ export function Stat({ label, value, unit, accent }: { label: string; value: str
 export function Pill({ tone = 'neutral', children }: { tone?: 'neutral' | 'good' | 'warn' | 'bad' | 'info' | 'accent'; children: React.ReactNode }) {
   const tones: Record<string, string> = {
     neutral: 'bg-secondary text-secondary-foreground',
-    good: 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/25',
-    warn: 'bg-amber-500/15 text-amber-400 border border-amber-500/25',
-    bad: 'bg-red-500/15 text-red-400 border border-red-500/25',
-    info: 'bg-sky-500/15 text-sky-400 border border-sky-500/25',
-    accent: 'bg-primary/15 text-primary border border-primary/25',
+    good: 'bg-emerald-500/12 text-emerald-700 border border-emerald-500/30',
+    warn: 'bg-amber-500/12 text-amber-700 border border-amber-500/30',
+    bad: 'bg-red-500/12 text-red-600 border border-red-500/30',
+    info: 'bg-sky-500/12 text-sky-700 border border-sky-500/30',
+    accent: 'bg-primary/12 text-primary border border-primary/30',
   };
   return <span className={cn('inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-medium', tones[tone])}>{children}</span>;
 }
@@ -113,7 +113,7 @@ export function EmptyState({ icon, text }: { icon: React.ReactNode; text: string
 }
 
 /** Simple inline SVG bar chart for 7/14 day series. values: {label, value}[] */
-export function MiniBars({ data, height = 90, color = 'hsl(38 92% 55%)' }: { data: { label: string; value: number }[]; height?: number; color?: string }) {
+export function MiniBars({ data, height = 90, color = 'hsl(18 95% 55%)' }: { data: { label: string; value: number }[]; height?: number; color?: string }) {
   const max = Math.max(1, ...data.map((d) => d.value));
   return (
     <div className="flex items-end gap-1.5 w-full" style={{ height }}>
@@ -122,7 +122,7 @@ export function MiniBars({ data, height = 90, color = 'hsl(38 92% 55%)' }: { dat
           <span className="text-[9px] text-muted-foreground">{d.value > 0 ? d.value : ''}</span>
           <div
             className="w-full rounded-md transition-all"
-            style={{ height: `${Math.max(d.value > 0 ? 6 : 2, (d.value / max) * (height - 28))}px`, background: d.value > 0 ? color : 'hsl(220 16% 16%)' }}
+            style={{ height: `${Math.max(d.value > 0 ? 6 : 2, (d.value / max) * (height - 28))}px`, background: d.value > 0 ? color : 'hsl(30 28% 87%)' }}
           />
           <span className="text-[9px] text-muted-foreground truncate w-full text-center">{d.label}</span>
         </div>
@@ -131,14 +131,14 @@ export function MiniBars({ data, height = 90, color = 'hsl(38 92% 55%)' }: { dat
   );
 }
 
-export function Ring({ percent, size = 64, stroke = 6, color = 'hsl(38 92% 55%)', children }: { percent: number; size?: number; stroke?: number; color?: string; children?: React.ReactNode }) {
+export function Ring({ percent, size = 64, stroke = 6, color = 'hsl(18 95% 55%)', children }: { percent: number; size?: number; stroke?: number; color?: string; children?: React.ReactNode }) {
   const r = (size - stroke) / 2;
   const c = 2 * Math.PI * r;
   const p = Math.min(100, Math.max(0, percent));
   return (
     <div className="relative inline-flex items-center justify-center" style={{ width: size, height: size }}>
       <svg width={size} height={size} className="-rotate-90">
-        <circle cx={size / 2} cy={size / 2} r={r} stroke="hsl(220 16% 16%)" strokeWidth={stroke} fill="none" />
+        <circle cx={size / 2} cy={size / 2} r={r} stroke="hsl(30 28% 87%)" strokeWidth={stroke} fill="none" />
         <circle
           cx={size / 2}
           cy={size / 2}

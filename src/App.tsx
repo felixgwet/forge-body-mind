@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { LayoutDashboard, Dumbbell, MoonStar, Flame, Brain, Settings as SettingsIcon, X, Bell, BellOff, Share, Info } from 'lucide-react';
+import { LayoutDashboard, Dumbbell, MoonStar, Sparkles, Brain, Settings as SettingsIcon, X, Bell, BellOff, Share, Info } from 'lucide-react';
 import { StoreProvider, useStore, todayISO, notify } from './lib/store';
 import { WEEKLY_PLAN } from './lib/data';
 import Today from './screens/Today';
@@ -15,7 +15,7 @@ const TABS: { id: Tab; label: string; icon: React.ElementType }[] = [
   { id: 'today', label: 'Today', icon: LayoutDashboard },
   { id: 'train', label: 'Train', icon: Dumbbell },
   { id: 'sleep', label: 'Sleep', icon: MoonStar },
-  { id: 'retention', label: 'Streak', icon: Flame },
+  { id: 'retention', label: 'Vitality', icon: Sparkles },
   { id: 'mind', label: 'Mind', icon: Brain },
 ];
 
@@ -58,11 +58,11 @@ function Shell() {
     }
     // Meditation
     if (!state.meditationLogs.some((l) => l.dateISO === today) && hm >= r.meditate) {
-      push(`med-${today}`, 'Meditation reminder', 'Have you sat today? Even 5 minutes protects the streak.', 'mind');
+      push(`med-${today}`, 'Meditation reminder', 'Have you sat today? Even 5 minutes protects your calm.', 'mind');
     }
     // Reading
     if (!state.readingLogs.some((l) => l.dateISO === today) && hm >= r.read) {
-      push(`read-${today}`, 'Reading reminder', 'Have you read today? Ten pages keeps the chain alive.', 'mind');
+      push(`read-${today}`, 'Reading reminder', 'Have you read today? Ten pages keeps the mind warm.', 'mind');
     }
     // Chess
     if (!state.chessLogs.some((l) => l.dateISO === today) && hm >= r.chess) {
@@ -103,8 +103,8 @@ function Shell() {
       <div className="pt-safe sticky top-0 z-20 bg-background/85 backdrop-blur-md border-b border-border/60">
         <div className="flex items-center justify-between px-4 h-12">
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-amber-400 to-red-500 flex items-center justify-center">
-              <Flame size={15} className="text-[#0b0e14]" fill="#0b0e14" />
+            <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-orange-500 via-rose-500 to-violet-500 flex items-center justify-center shadow-md shadow-orange-500/25">
+              <Sparkles size={15} className="text-white" fill="white" />
             </div>
             <span className="font-bold tracking-tight">Forge</span>
           </div>

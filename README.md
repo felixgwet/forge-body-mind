@@ -2,7 +2,7 @@
 
 A mobile-first **Progressive Web App** for tracking strength training, sleep, and mental-performance habits. Installable on iOS/Android home screens, works offline, and stores all data locally on the device — no backend, no accounts, no tracking.
 
-**Live:** https://pxjprg6xgwbug.kimi.page
+**Live:** https://felixgwet.github.io/forge-body-mind/ (mirror: https://pxjprg6xgwbug.kimi.page)
 
 ## Why I built it
 
